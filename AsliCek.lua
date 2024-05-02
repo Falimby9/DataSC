@@ -1,33 +1,3 @@
-listWorld = "C:\\Users\\Administrator\\Desktop\\Lucifer\\Farm.txt"
-
-multyBot = false
-
-itmId = 4584 
-itmSeed = itmId + 1 ---Dont Change
-
-minPerfectPlant = 2630
-
-delayWarp = 7000  ---Delay Warp Farm
-delayCekdoor = 2000 --- delay CekDoor 
-
-checkTree = true  -- check Total ready and plant
-checkFossil = true  -- check Fossil
-checkDoor = true  -- check Door Farm
-checkJammer = true -- Check on/off jammer
-checkLock = true -- only SL an WL can Check
-checkFire = true -- check Fire in World
-checkToxic = true -- Check Toxic Waste
-checkLockAge = true -- Check Lock Age 
-putLock = true -- put Lock if lock is Exp
-
-storageLock = ""
-doorLock = ""
-
-webHookInfo = "https://discord.com/api/webhooks/1208477594878607361/1orsHegstx8n0miS3tSNeSdqMPJ0f7M_nf7WwgzEVT_Qf4ZbvuXQs6U5os9jqdga8bJ4"
-webhookNuked = "https://discord.com/api/webhooks/1208477594878607361/1orsHegstx8n0miS3tSNeSdqMPJ0f7M_nf7WwgzEVT_Qf4ZbvuXQs6U5os9jqdga8bJ4"
-
-
-
 udahBayar = false
 
 username = getUsername()
