@@ -1290,7 +1290,7 @@ function packInfo(wb,id,desc)
         syn.embed1.thumbnail = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
         syn.embed1:addField("**<:ubisyn:1235474439689207862> WORLD**","||"..bot:getWorld().name.."||\n ",true)
         syn.embed1:addField("**<:bot:1229904719720484990> LAST DROP**",bot.name.." (No."..indexBot..")\n ",true)
-        syn.embed1:addField("**<:orbs:1235606674497339422> DROPPED ITEMS**",desc "\n  ",true)
+        syn.embed1:addField("**<:orbs:1235606674497339422> DROPPED ITEMS**",desc.. "\n  ",true)
         syn.embed1.footer.icon_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
         syn.embed1.footer.text = "Lucifer Rotation V.1.2 by SYN\n"..os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
         if id ~= "" then 
