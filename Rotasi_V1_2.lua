@@ -30,7 +30,7 @@ end
 
 if activateScript then 
 bot = getBot() 
-for i,botzin pairs(getBots()) do 
+for i,botz in pairs(getBots()) do 
     if botz.name:upper() == bot.name:upper() then 
         indexBot = i 
     end
