@@ -929,7 +929,7 @@ if udahBayar then
              end
         end
         if reduceWave then 
-            if bot:getInventory():findItem(202) ~= 20 then 
+            if bot:getInventory():findItem(202) ~= totalWorld then 
                 take(202)
                 sleep(100)
             end
