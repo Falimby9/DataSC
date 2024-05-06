@@ -827,8 +827,9 @@ function take(id)
     if bot:getInventory():findItem(202) > totalWorld then
         while bot:getInventory():findItem(202) > totalWorld do
             bot:sendPacket(2,"action|drop\n|itemID|202")
+            sleep(1000)
             bot:sendPacket(2,"action|dialog_return\ndialog_name|drop_item\nitemID|202|\ncount|"..(bot:getInventory():findItem(202) - totalWorld))
-            sleep(500)
+            sleep(3000)
         end
     end
 end
