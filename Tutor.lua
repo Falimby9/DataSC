@@ -816,18 +816,13 @@ function take(id)
             sleep(1000)
             bot:collectObject(obj.oid,3)
             sleep(1000)
-            break
-        else 
-            while obj.id == id do 
-               bot:say("Bahan Kurang bosku !")
-               sleep(20000)
-            end
         end
-    end
-    if bot:getInventory():findItem(id) > 0 then
-        bot:moveTo(-1,0)
-        sleep(100)
-        bot:setDirection(false)
+        if bot:getInventory():findItem(id) > totalWorld then
+          bot:moveTo(-1,0)
+          sleep(100)
+          bot:setDirection(false)
+          break
+        end
     end
     if bot:getInventory():findItem(202) > totalWorld then
         bot:sendPacket(2,"action|drop\n|itemID|202")
