@@ -817,17 +817,19 @@ function take(id)
             bot:collectObject(obj.oid,3)
             sleep(1000)
         end
-        if bot:getInventory():findItem(id) > totalWorld then
-          bot:moveTo(-1,0)
-          sleep(100)
-          bot:setDirection(false)
+        if bot:getInventory():findItem(id) > 0 then
           break
         end
     end
+    bot:moveTo(-1,0)
+    sleep(100)
+    bot:setDirection(false)
     if bot:getInventory():findItem(202) > totalWorld then
-        bot:sendPacket(2,"action|drop\n|itemID|202")
-        bot:sendPacket(2,"action|dialog_return\ndialog_name|drop_item\nitemID|202|\ncount|"..(bot:getInventory():findItem(202) - totalWorld))
-        sleep(500)
+        while bot:getInventory():findItem(202) > totalWorld do
+            bot:sendPacket(2,"action|drop\n|itemID|202")
+            bot:sendPacket(2,"action|dialog_return\ndialog_name|drop_item\nitemID|202|\ncount|"..(bot:getInventory():findItem(202) - totalWorld))
+            sleep(500)
+        end
     end
 end
 
