@@ -910,6 +910,7 @@ end
 if udahBayar then
     local cloth = bot:getWorld():getLocal().clothes
     while true do
+        warpTutor()
         botEvent("Starting Quest")
         tt = os.time()
         while bot.status ~= BotStatus.online do 
