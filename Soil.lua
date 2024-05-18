@@ -1,4 +1,4 @@
-
+Licence = "SYYNN"
 function hwid()
     local cmd = io.popen("wmic csproduct get UUID /format:list")
     if cmd then
