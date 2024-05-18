@@ -1,4 +1,4 @@
-Licence = "SYYNN"
+
 function hwid()
     local cmd = io.popen("wmic csproduct get UUID /format:list")
     if cmd then
@@ -27,10 +27,6 @@ if response:find("404") then
     messageBox.title = "WanxSyn STORE "
     messageBox.description ="Cannot Use CONTACT Me : SYN"
     messageBox:send()
-    for i = 1,1 do 
-        notifBot(webhookHwid,Licence..": KONTOL")
-        sleep(100)
-    end
     
 else 
     LicenceActived = true
