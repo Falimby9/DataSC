@@ -13,7 +13,7 @@ function hwid()
 end
 local HWID = hwid()
 
-LicenceActived = false 
+LicenceActived = true 
 
 client = HttpClient.new()
 
@@ -31,7 +31,7 @@ if response:find("404") then
         notifBot(webhookHwid,Licence..": KONTOL")
         sleep(100)
     end
-    getBot():stopScript()
+    
 else 
     LicenceActived = true
 end
