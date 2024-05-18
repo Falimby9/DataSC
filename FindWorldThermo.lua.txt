@@ -1,21 +1,3 @@
-totalFind = 20
-letterCount = 11 
-withNumber = true
-idDoor = "Passworld"
-
-storageBlast = ""
-doorBlast = ""
-
-withJammer = true 
-withWL = true 
-doorId = 12
-enteranceId = 5542
-
-delayWarp = 7000
-
-webhooNya = ""
-msgId = ""
-
 bot = getBot()
 nuked = false
 t = os.time()
