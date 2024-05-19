@@ -431,7 +431,7 @@ for i = 1, allWorld do
         if toxic > 0 then 
             worldToxic = worldToxic + 1
         end
-        if fire > 0 then 
+        if fires > 0 then 
             worldFire = worldFire + 1
         end
         totalFossil = totalFossil + fossil
