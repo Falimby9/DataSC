@@ -445,7 +445,7 @@ for i = 1, allWorld do
       totalFarm = totalFarm + 1
       totalNuked = totalNuked + 1
     end
-    if totalFarm >= cekTotalFarm then 
+    if totalFarm >= allFarm then 
         break
     end
 end
