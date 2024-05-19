@@ -8,7 +8,7 @@ udahBayar = false
 
 username = getUsername()
 client = HttpClient.new()
-client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LicenceTutor/"..username
+client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LCeckher/"..username
 local response = client:request().body
 
 function synProx(status)
