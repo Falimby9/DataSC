@@ -239,7 +239,7 @@ function botEvent(info)
         }
         @{
             name = "DATA CHECKER"
-                value = "<:arrow:1231993245144318083> Total Farm ]]..allFarm.." <:wl:1226195506422612010>\n"..[[<:arrow:1231993245144318083> Total Checked ]]..cekTotalFarm.." <:wl:1226195506422612010>\n"..[[<:arrow:1231993245144318083> Total Fossil ]]..totalFossil.." <:fossil:1226195061642100886>\n"..[[<:arrow:1231993245144318083> Perfect Plant ]]..perfect.."  <:perfect:1226232173670174771>\n"..[[<:arrow:1231993245144318083> Bad Plant ]]..bad.." <:bad:1226232303454519366>\n"..[[<:arrow:1231993245144318083> World Fired ]]..Firecheck.." <:firesyn:1232363728583000176>\n"..[[<:arrow:1231993245144318083> World Toxic ]]..toxtox.." <:toxic:1232363823365619753>\n"..[["
+                value = "<:arrow:1231993245144318083> Total Farm ]]..allFarm.." <:wl:1226195506422612010>\n"..[[<:arrow:1231993245144318083> Total Checked ]]..(allWorld - totalNuked).." <:wl:1226195506422612010>\n"..[[<:arrow:1231993245144318083> Total Fossil ]]..totalFossil.." <:fossil:1226195061642100886>\n"..[[<:arrow:1231993245144318083> Perfect Plant ]]..perfect.."  <:perfect:1226232173670174771>\n"..[[<:arrow:1231993245144318083> Bad Plant ]]..bad.." <:bad:1226232303454519366>\n"..[[<:arrow:1231993245144318083> World Fired ]]..Firecheck.." <:firesyn:1232363728583000176>\n"..[[<:arrow:1231993245144318083> World Toxic ]]..toxtox.." <:toxic:1232363823365619753>\n"..[["
                 inline = "true"
         }
         @{
