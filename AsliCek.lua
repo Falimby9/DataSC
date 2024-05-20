@@ -293,9 +293,8 @@ end
 
 
 if udahBayar then 
-
+worldChecker("Bot [ "..bot.name:upper().." ] Checking "..allWorld.." Farm")
 for i = 1, allWorld do 
-    worldChecker("Bot [ "..bot.name:upper().." ] Checking "..allWorld.." Farm")
     nuked = false
     world = ""
     door = ""
