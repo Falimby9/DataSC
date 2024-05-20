@@ -204,6 +204,8 @@ end
 function botEvent(info)
     te = os.time() - t
     local statusBot = ''
+    local toxtox = 0 
+    local Firecheck = 0
     if bot.status == BotStatus.online then 
         statusBot = 'Online'
     else 
