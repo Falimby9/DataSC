@@ -146,7 +146,7 @@ function getPlayerPos(world,x,y)
         end
     end
     for _,posS in pairs(pos) do 
-        if x == posS.x and y == posS.ye then 
+        if x == posS.ex and y == posS.ye then 
             return true
         end
     end
