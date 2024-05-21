@@ -290,6 +290,7 @@ while true do
         if cloth.hand ~= rodId then
             takeRod(worldFishings,doorFishings)
             sleep(100)
+             bot:wear(rodId)
         end
         if bot:getInventory():findItem(baitId) == 0 then
             takeBait(worldFishings,doorFishings,baitId)
