@@ -274,9 +274,49 @@ function storeProfit()
                 end 
             end
         end
+     packInfo(webhookProfit,msgId,infoPack())
+        sleep(100)
     else 
         notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..worldProfits:upper().."|| Nuked @everyone !")
     end
+end
+
+function packInfo(wb,id,desc)
+    if wb ~= "" then 
+        local syn = Webhook.new(wb)
+        syn.avatar_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1.use = true 
+        syn.embed1.color = 16740100
+        syn.embed1.title = "**<:world:1229904934695338145> PROFIT INFORMATION**"
+        syn.embed1.thumbnail = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1:addField("**<:ubisyn:1235474439689207862> WORLD**","||"..bot:getWorld().name.."||\n ",false)
+        syn.embed1:addField("**<:bot:1229904719720484990> LAST DROP**",bot.name.." (No."..indexBot..")\n ",false)
+        syn.embed1:addField("**<:orbs:1235606674497339422> DROPPED ITEMS**",desc.. "\n  ",false)
+        syn.embed1.footer.icon_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1.footer.text = "Lucifer Auto Fish by SYN\n"..os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
+        if id ~= "" then 
+            syn:edit(id)
+        else 
+            syn:send()
+        end
+    end
+end
+
+function infoPack()
+    local store = {}
+    for _,obj in pairs(bot:getWorld():getObjects()) do
+        if store[obj.id] then
+            store[obj.id].count = store[obj.id].count + obj.count
+        else
+            store[obj.id] = {id = obj.id, count = obj.count}
+        end
+    end
+    local str = ""
+    for _,object in pairs(store) do
+        local dropInfo = getInfo(object.id)
+        str = str.."\n"..dropInfo.name.." = "..object.count
+    end
+    return str
 end
 
 while true do 
