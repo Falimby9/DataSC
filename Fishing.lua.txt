@@ -383,8 +383,9 @@ while true do
         sleep(100)
         fishes.enabled = true
         sleep(100)
-        while bot:getInventory():findItem(baitId) ~= 0 do
-            reconnect(worldFishings,doorFishings,ex,ye)
+        while bot:getInventory():findItem(baitId) > 0 do
+        
+reconnect(worldFishings,doorFishings,ex,ye)
             sleep(1000)
         end
         fishes.enabled = false
