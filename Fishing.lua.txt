@@ -1,0 +1,431 @@
+
+baitId = 3014
+worldBait = {"WORLD","WORLD"}
+doorBait = "DOOR"
+
+rodId = 3008
+worldRod = "WORLD:DOOR"
+
+worldFishing = "WORLD:DOOR"
+patokan = 20
+
+autoDrill = false   --Dropped Drill on World Bait 
+autoTrawler = false --Dropped Drill on World Bait 
+autoGemo = false    --Dropped Drill on World Bait 
+
+worldProfit = "WORLD:DOOR"
+itemToSave = {1,2,3,4,5}
+
+autoTrashFish = true
+
+resting = true 
+restInterval = 30
+restTime = 15 
+diconnectOnrest = true
+
+webhookNuked = ""
+
+webhookOffline = ""
+
+webhookProfit = ""
+msgId = ""
+
+
+
+function takeData(name)
+    local c,d = string.match(name,"(.-):(.+)")
+    if c and d then 
+          return c,d
+    end
+end
+
+rest = os.time()
+bot = getBot()
+fishes = bot.auto_fish
+fishes.enabled = false
+fishes.auto_trash = false
+fishes.auto_drill = false
+fishes.auto_trawler = false
+fishes.auto_gemonade = false
+fishes.auto_trash = autoTrashFish
+fishes.auto_drill = autoDrill
+fishes.auto_trawler = autoTrawler
+fishes.auto_gemonade = autoGemo
+nuked = false
+worldRods,doorRods = takeData(worldRod)
+worldFishings,doorFishings = takeData(worldFishing)
+worldProfits,doorProfits = takeData(worldProfit)
+
+for i,bots in pairs(getBots()) do 
+    if bots.name:upper() == bot.name:upper() then 
+        indexBot = i
+    end
+end
+
+function round(n)
+   return n % 1 > 0.5 and math.ceil(n) or math.floor(n)
+end
+
+function warp(world,id) 
+    local suck = 0 
+    addEvent(Event.variantlist, function(variant, netid)
+        if variant:get(0):getString() == "OnConsoleMessage" then
+            if variant:get(1):getString():find("inaccessible") then
+                nuked = true
+            end
+        end
+    end)
+    while not bot:isInWorld(world:upper()) and not nuked do 
+        while bot.status ~= BotStatus.online do 
+            sleep(1000)
+        end
+        if suck == 10 then 
+            notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..world:upper().."|| Cannot Join World. Waiting 5 Minutes because Potato Server")
+            sleep(100)
+            sleep(300000)
+        else
+            if bot:isInWorld() then 
+                bot:sendPacket(3,"action|quit_to_exit")
+                sleep(500)
+                bot:sendPacket(3,"action|join_request\nname|"..world:upper().."|"..id:upper().."\ninvitedWorld|0")
+                listenEvents(1)
+                sleep(delayWarp)
+            else 
+               bot:sendPacket(3,"action|join_request\nname|"..world:upper().."|"..id:upper().."\ninvitedWorld|0")
+                listenEvents(1)
+               sleep(delayWarp)
+            end
+            suck = suck + 1
+        end
+    end
+    if id ~= "" and bot:getWorld():getTile(bot.x,bot.y).fg == 6 and not nuked then 
+        local wrongDoor = 0 
+        while bot:getWorld():getTile(bot.x,bot.y).fg == 6 and wrongDoor ~= 5 do 
+            if wrongDoor == 5 then 
+                notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..world:upper().."|| Cannot Join Door. Terminate Script !")
+                sleep(100)
+                bot:stopScript()
+            else
+                bot:sendPacket(3,"action|join_request\nname|"..world:upper().."|"..id:upper().."\ninvitedWorld|0")
+                listenEvents(3)
+                wrongDoor = wrongDoor + 1
+            end
+        end
+    end
+end
+
+function take(id)
+    for _,obj in pairs(bot:getWorld():getObjects()) do 
+        if obj.id == id then 
+            bot:findPath(round(obj.x/32),math.floor(obj.y/32))
+            sleep(100)
+            bot:collectObject(obj.oid,3)
+            sleep(500)
+        end
+        if bot:getInventory():findItem(id) ~= 0 then   break
+        end
+    end
+end
+
+function takeRod(world,door)
+    if worldRods ~= "" and bot:getInventory():findItem(rodId) == 0 then 
+        bot.auto_collect = false 
+        sleep(100)
+        warp(worldRods,doorRods)
+        sleep(100)
+        if not nuked then
+            while bot:getInventory():findItem(rodId) == 0 do 
+                take(rodId)
+                sleep(100)
+            end
+            bot:moveTo(-1,0)
+            sleep(500)
+            bot:setDirection(false)
+            sleep(100)
+            while bot:getInventory():findItem(rodId) > 1 do 
+                bot:sendPacket(2,"action|drop\n|itemID|"..rodId)
+                sleep(500)
+                bot:sendPacket(2,"action|dialog_return\ndialog_name|drop_item\nitemID|2204|\ncount|"..bot:getInventory():findItem(rodId) - 1)
+                sleep(1000)
+            end
+        else 
+            notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..worldRods:upper().."|| Nuked @everyone !")
+        end
+    end
+    warp(world,door)
+end
+
+function takeBait(world,door,id)
+    for _,worldB in pairs(worldBait) do
+        bot.auto_collect = false 
+        sleep(100)
+        warp(worldB,doorBait)
+        sleep(100)
+        if not nuked then
+            while bot:getInventory():findItem(id) == 0 do 
+                take(id)
+                sleep(100)
+            end
+        else 
+            notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..worldB:upper().."|| Nuked @everyone !")
+        end
+    end
+end
+
+function getPlayerPos(world,x,y)
+    local pos = {}
+    for _,vot in pairs(getBots()) do 
+        if vot:isInWorld(world:upper()) and vot.name:upper() ~= bot.name:upper() and bot:getWorld():getTile(vot.x,vot.y).fg ~= 6 and bot.y ~= vot.y and bot.x ~= x then 
+            table.insert(pos, {ex = vot.x,ye = vot.y})
+        end
+    end
+    for _,posS in pairs(pos) do 
+        if x == posS.x and y == posS.ye then 
+            return true
+        end
+    end
+    return false
+end
+
+function getStatus(inibot)
+    local status = {
+        [BotStatus['offline']] = 'Offline',
+        [BotStatus["online"]] = "Online",
+        [BotStatus["account_banned"]] = "Banned",
+        [BotStatus["location_banned"]] = "Location Banned",
+        [BotStatus["server_overload"]] = "Overload",
+        [BotStatus["too_many_login"]] = "Too Many Login",
+        [BotStatus["maintenance"]] = "Maintenance",
+        [BotStatus["version_update"]] = "Version Update",
+        [BotStatus["server_busy"]] = "Server Busy",
+        [BotStatus["error_connecting"]] = "Error Connecting",
+        [BotStatus["logon_fail"]] = "Login Fail",
+        [BotStatus["high_load"]] = "High Load",
+        [BotStatus["changing_subserver"]] = "Changing Subserver",
+        [BotStatus["account_restricted"]] = "Acc Restricted",
+        [BotStatus["network_restricted"]] = "Network Restricted",
+        [BotStatus["getting_server_data"]] =  "Getting Server",
+        [BotStatus["bypassing_server_data"]] =  "Bypass",
+        [BotStatus["http_block"]] =  "Http Block",
+        [BotStatus["high_ping"]] =  "High Ping"
+    }
+    return status[inibot.status]
+end
+
+function notifBot(webhookInfo,status)
+    if webhookInfo ~= "" then 
+        local syn = Webhook.new(webhookInfo)
+        syn.avatar_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1.use = true 
+        syn.embed1.title = status
+        syn.embed1.color = 2500399
+        syn:send()
+    end
+end
+
+function reconnect(world,door,x,y)
+    if resting then 
+        cur = os.time
+        restNow = cur - rest 
+        if restNow >= (restInterval*60) then 
+            if diconnectOnrest then 
+                bot.auto_reconnect = false 
+                sleep(100)
+                bot:disconnect()
+            end
+            notifBot(webhookOffline,"<a:questionsyn:1235453801758982216> "..getBot().name.." ("..indexBot..") Resting Time")
+            sleep(restDuration * 60 * 1000)
+            rest = os.time()
+            bot.auto_reconnect = true 
+            sleep(100)
+        end
+    end
+    if bot.status == BotStatus.online and bot.x ~= x or bot.y ~= y then 
+        notifBot(webhookOffline,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") Bot Stuck Current X : "..x.." Current Y : "..y)
+        while not bot:isInWorld(world:upper()) and not nuked do 
+            while bot.status ~= BotStatus.online do 
+                sleep(1000)
+            end
+            warp(world,door)
+            sleep(100)
+        end
+        if door ~= "" and bot:getWorld():getTile(bot.x,bot.y).fg == 6 then 
+            while bot:getWorld():getTile(bot.x,bot.y).fg == 6 and not nuked do 
+                warp(world,door)
+            end
+        end
+        if x and y and math.floor(bot:getWorld():getLocal().posx/32) ~= x or math.floor(bot:getWorld():getLocal().posy/32) ~= y then 
+            notifBot(webhookOffline,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") Bot Stuck Current X : "..x.." Current Y : "..y)
+            sleep(100)
+            while math.floor(bot:getWorld():getLocal().posx/32) ~= x or math.floor(bot:getWorld():getLocal().posy/32) ~= y do 
+                bot:findPath(x,y)
+            end
+        end
+    elseif bot.status ~= BotStatus.online then 
+        notifBot(webhookOffline,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") Bot Status is "..getStatus(bot))
+            sleep(100)
+        while not bot:isInWorld(world:upper()) and not nuked do 
+            while bot.status ~= BotStatus.online do 
+                sleep(1000)
+            end
+            warp(world,door)
+            sleep(100)
+        end
+        if door ~= "" and bot:getWorld():getTile(bot.x,bot.y).fg == 6 then 
+            while bot:getWorld():getTile(bot.x,bot.y).fg == 6 and not nuked do 
+                warp(world,door)
+            end
+        end
+        if x and y and math.floor(bot:getWorld():getLocal().posx/32) ~= x or math.floor(bot:getWorld():getLocal().posy/32) ~= y then 
+            while math.floor(bot:getWorld():getLocal().posx/32) ~= x or math.floor(bot:getWorld():getLocal().posy/32) ~= y do 
+                bot:findPath(x,y)
+            end
+        end
+    end
+end
+
+function tileDrop(x,y,num)
+    local count = 0
+    local stack = 0
+    for _,obj in pairs(bot:getWorld():getObjects()) do
+        if round(obj.x / 32) == x and math.floor(obj.y / 32) == y then
+            count = count + obj.count
+            stack = stack + 1
+        end
+    end
+    if stack < 20 and count <= (4000 - num) then
+        return true
+    end
+    return false
+end
+
+function storeProfit()
+    bot.auto_collect = false 
+    sleep(100)
+    warp(worldProfits,doorProfits) 
+    sleep(100)
+    if not nuked then
+        local ex = math.floor(bot:getWorld():getLocal().posx/32)
+        local ye = math.floor(bot:getWorld():getLocal().posy/32)
+        local up = 0
+        for _,item in pairs(itemToSave) do 
+            for i = 1,99,1 do 
+                reconnect(worldProfits,doorProfits,(ex + i) - 1,ye)
+                if getInfo(bot:getWorld():getTile(ex + i,ye - up).fg).collision_type ~= 1 then 
+                    if tileDrop(ex + i,ye - up,bot:getInventory():findItem(item)) then 
+                        reconnect(worldProfits,doorProfits,(ex + i) - 1,ye)
+                        bot:findPath((ex + i) - 1,ye- up)
+                        sleep(100)
+                        bot:setDirection(false)
+                        sleep(500)
+                        bot:drop(item,bot:getInventory():findItem(item))
+                        sleep(3000)
+                    end
+                    if bot:getInventory():findItem(item) == 0 then
+                        break
+                    end
+                elseif getInfo(bot:getWorld():getTile(ex + i,ye - up).fg).collision_type == 1 then 
+                     up = up + 1
+                end 
+            end
+        end
+        packInfo(webhookProfit,msgId,infoPack())
+        sleep(100)
+    else 
+        notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..worldProfits:upper().."|| Nuked @everyone !")
+    end
+end
+
+function packInfo(wb,id,desc)
+    if wb ~= "" then 
+        local syn = Webhook.new(wb)
+        syn.avatar_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1.use = true 
+        syn.embed1.color = 16740100
+        syn.embed1.title = "**<:world:1229904934695338145> PROFIT INFORMATION**"
+        syn.embed1.thumbnail = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1:addField("**<:ubisyn:1235474439689207862> WORLD**","||"..bot:getWorld().name.."||\n ",false)
+        syn.embed1:addField("**<:bot:1229904719720484990> LAST DROP**",bot.name.." (No."..indexBot..")\n ",false)
+        syn.embed1:addField("**<:orbs:1235606674497339422> DROPPED ITEMS**",desc.. "\n  ",false)
+        syn.embed1.footer.icon_url = "https://cdn.discordapp.com/attachments/1180523579381665933/1180577805403181076/20231203_013427.png"
+        syn.embed1.footer.text = "Lucifer Auto Fish by SYN\n"..os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
+        if id ~= "" then 
+            syn:edit(id)
+        else 
+            syn:send()
+        end
+    end
+end
+
+function infoPack()
+    local store = {}
+    for _,obj in pairs(bot:getWorld():getObjects()) do
+        if store[obj.id] then
+            store[obj.id].count = store[obj.id].count + obj.count
+        else
+            store[obj.id] = {id = obj.id, count = obj.count}
+        end
+    end
+    local str = ""
+    for _,object in pairs(store) do
+        local dropInfo = getInfo(object.id)
+        str = str.."\n"..dropInfo.name.." = "..object.count
+    end
+    return str
+end
+
+while true do 
+    while bot.status ~= BotStatus.online do 
+        sleep(1000)
+    end
+    warp(worldFishings,doorFishings)
+    sleep(100)
+    if not nuked then 
+        local cloth = bot:getWorld():getLocal().clothes 
+        if cloth.hand ~= rodId then
+            takeRod(worldFishings,doorFishings)
+            sleep(100)
+        end
+        if bot:getInventory():findItem(baitId) == 0 then
+            takeBait(worldFishings,doorFishings,baitId)
+            sleep(100)
+        end
+        if autoDrill then 
+            takeBait(worldFishings,doorFishings,5522)
+        end
+        if autoTrawler then 
+            takeBait(worldFishings,doorFishings,10218)
+        end
+        if autoGemo then 
+            takeBait(worldFishings,doorFishings,6914)
+        end
+        warp(worldFishings,doorFishings)
+        for _,tile in pairs(bot:getWorld():getTiles()) do 
+            if tile.fg == patokan or tile.bg == patokan then 
+                if not getPlayerPos(worldFishings,tile.x,tile.y) then
+                    bot:findPath(tile.x,tile.y)
+                    break
+                end
+            end
+        end
+        local ex = math.floor(bot:getWorld():getLocal().posx/32)
+        local ye = math.floor(bot:getWorld():getLocal().posy/32)
+        reconnect(worldFishings,doorFishings,ex,ye)
+        bot.auto_fish:setRod(rodId)
+        sleep(100)
+        bot.auto_fish:setBait(baitId)
+        sleep(100)
+        fishes.enabled = true
+        sleep(100)
+        while bot:getInventory():findItem(baitId) ~= 0 do
+            reconnect(worldFishings,doorFishings,ex,ye)
+            sleep(1000)
+        end
+        fishes.enabled = false
+        storeProfit(worldFishings,doorFishings)
+        sleep(100)
+    else 
+        notifBot(webhookNuked,"<a:ping:1233214776880922757> "..getBot().name.." ("..indexBot..") World ||"..worldFishings:upper().."|| Nuked @everyone !")
+    end
+end 
+
