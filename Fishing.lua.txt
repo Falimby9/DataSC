@@ -320,6 +320,8 @@ function infoPack()
 end
 
 while true do 
+    ex = 0 
+    ye = 0 
     while bot.status ~= BotStatus.online do 
         sleep(1000)
     end
@@ -350,13 +352,13 @@ while true do
             if tile.fg == patokan or tile.bg == patokan then 
                 if not getPlayerPos(worldFishings,tile.x,tile.y) then
                     bot:findPath(tile.x,tile.y)
+                    ex = tile.x 
+                    ye = tile.y
                     break
                 end
             end
         end
-        local ex = math.floor(bot:getWorld():getLocal().posx/32)
-        local ye = math.floor(bot:getWorld():getLocal().posy/32)
-        reconnect(worldFishings,doorFishings,ex,ye)
+    reconnect(worldFishings,doorFishings,ex,ye)
         bot.auto_fish:setRod(rodId)
         sleep(100)
         bot.auto_fish:setBait(baitId)
