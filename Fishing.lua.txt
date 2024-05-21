@@ -1,37 +1,3 @@
-
-baitId = 3014
-worldBait = {"WORLD","WORLD"}
-doorBait = "DOOR"
-
-rodId = 3008
-worldRod = "WORLD:DOOR"
-
-worldFishing = "WORLD:DOOR"
-patokan = 20
-
-autoDrill = false   --Dropped Drill on World Bait 
-autoTrawler = false --Dropped Drill on World Bait 
-autoGemo = false    --Dropped Drill on World Bait 
-
-worldProfit = "WORLD:DOOR"
-itemToSave = {1,2,3,4,5}
-
-autoTrashFish = true
-
-resting = true 
-restInterval = 30
-restTime = 15 
-diconnectOnrest = true
-
-webhookNuked = ""
-
-webhookOffline = ""
-
-webhookProfit = ""
-msgId = ""
-
-
-
 function takeData(name)
     local c,d = string.match(name,"(.-):(.+)")
     if c and d then 
