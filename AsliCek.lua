@@ -41,6 +41,8 @@ elseif itmSeed == 5667 then
    treemoji = "<:lasersyn:1226199071249797241>"
 elseif itmSeed == 341 then 
    treemoji = "<:chandsyn:1226198839036477490>" 
+else 
+    treemoji = "<:trees:1242648160635977768>"
 end
 
 for i,botz in pairs(getBots()) do 
