@@ -540,11 +540,7 @@ while true do
             warp(world.name,world.door)
             sleep(100)
             botInfo("Starting Build")
-            if not nuked then 
-                if not multyBot or indexBot == 1 then 
-                    putWater(world.name,world.door)
-                    sleep(100)
-                end 
+            if not nuked then
                 buildSoil(world.name,world.door)
                 sleep(100)
             else
