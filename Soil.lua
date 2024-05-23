@@ -134,6 +134,37 @@ function takeFarm(synList)
         end
     end
 end
+    function takeFarmM(synList)
+    local fileTxt = synList
+    local file = io.open(fileTxt, "r")
+    if file then 
+        local lines = {}
+        for line in file:lines() do 
+            table.insert(lines, line)
+        end
+        file:close()
+        lines1 = lines[1]
+        data = split(lines[1], ":")
+        if tablelength(data) == 2 then 
+             
+                for i = 1,#lines do 
+                    local e,f = string.match(lines[i],"(.-):(.+)")
+                    if e and f then 
+                        table.insert(worldSoil,{name=e,door=f})
+                    end
+                end
+        end
+        table.remove(lines, 1)
+        file = io.open(fileTxt, "w") 
+        if file then 
+            for _, line in ipairs(lines) do 
+                file:write(line.. "\n")
+            end
+            file:write(lines1)
+            file:close()
+        end
+    end
+    end
 
 function warp(world,door) 
     local stuck = 0 
@@ -449,28 +480,32 @@ end
 function putWater(world,door)
     for _,tile in pairs(bot:getWorld():getTiles()) do 
         if tile.x == 0 and tile.y <= 53 and bot:getWorld():getTile(tile.x,tile.y).fg == 0  and not bot:getWorld():getTile(tile.x,tile.y):hasFlag(1024) then 
+            if findItemSyn(822) == 0 then 
+                while findItemSyn(822) = 0 do 
+                    takeWater(world,door)
+                end
+            end
             bot:findPath(tile.x,tile.y)
             while not bot:getWorld():getTile(tile.x,tile.y):hasFlag(1024) do 
                 reconnect(world,door,tile.x,tile.y)
                 place(822,0,0)
                 sleep(200)
             end
-        end
-        if findItemSyn(822) == 0 then 
-            takeWater(world,door)
         end
     end
     for _,tile in pairs(bot:getWorld():getTiles()) do 
         if tile.x == 99 and tile.y <= 53 and bot:getWorld():getTile(tile.x,tile.y).fg == 0  and not bot:getWorld():getTile(tile.x,tile.y):hasFlag(1024) then 
+            if findItemSyn(822) == 0 then 
+                while findItemSyn(822) = 0 do 
+                    takeWater(world,door)
+                end
+            end
             bot:findPath(tile.x,tile.y)
             while not bot:getWorld():getTile(tile.x,tile.y):hasFlag(1024) do 
                 reconnect(world,door,tile.x,tile.y)
                 place(822,0,0)
                 sleep(200)
             end
-        end
-        if findItemSyn(822) == 0 then 
-            takeWater(world,door)
         end
     end
 end
@@ -505,9 +540,6 @@ function takeWater(worlds,doors)
 end
 
 sleep(1000 * (indexBot - 1))
-if multyBot or indexBot == 1 then 
-    takeFarm(listWorld)
-end
 while true do 
     while bot.status ~= BotStatus.online do 
         sleep(1000)
@@ -516,6 +548,7 @@ while true do
     placeds = 0 
     unplaceds = 0
     if multyBot then
+        takeFarmM(listWorld)
         for _,world in pairs(worldSoil) do
             if #worldList >= 10 then 
                 worldList = {} 
