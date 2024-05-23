@@ -60,9 +60,6 @@ if a and b then
   storageSoil = a 
   doorSoil = b
 end
-if multyBot or indexBot == 1 then 
-    takeFarm(listWorld)
-end
 
 function split(inputstr, sep)
     if sep == nil then
@@ -508,6 +505,9 @@ function takeWater(worlds,doors)
 end
 
 sleep(1000 * (indexBot - 1))
+if multyBot or indexBot == 1 then 
+    takeFarm(listWorld)
+end
 while true do 
     while bot.status ~= BotStatus.online do 
         sleep(1000)
