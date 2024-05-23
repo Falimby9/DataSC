@@ -471,7 +471,7 @@ function putWater(world,door)
     for _,tile in pairs(bot:getWorld():getTiles()) do 
         if tile.x == 0 and tile.y <= 53 and bot:getWorld():getTile(tile.x,tile.y).fg == 0  and not bot:getWorld():getTile(tile.x,tile.y):hasFlag(1024) then 
             if findItemSyn(822) == 0 then 
-                while findItemSyn(822) = 0 do 
+                while findItemSyn(822) == 0 and indexBot == 1 do 
                     takeWater(world,door)
                 end
             end
@@ -486,7 +486,7 @@ function putWater(world,door)
     for _,tile in pairs(bot:getWorld():getTiles()) do 
         if tile.x == 99 and tile.y <= 53 and bot:getWorld():getTile(tile.x,tile.y).fg == 0  and not bot:getWorld():getTile(tile.x,tile.y):hasFlag(1024) then 
             if findItemSyn(822) == 0 then 
-                while findItemSyn(822) = 0 do 
+                while findItemSyn(822) == 0 and indexBot == 1 do 
                     takeWater(world,door)
                 end
             end
