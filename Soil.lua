@@ -134,7 +134,7 @@ function takeFarm(synList)
         end
     end
 end
-    function takeFarmM(synList)
+function takeFarmM(synList)
     local fileTxt = synList
     local file = io.open(fileTxt, "r")
     if file then 
@@ -145,26 +145,16 @@ end
         file:close()
         lines1 = lines[1]
         data = split(lines[1], ":")
-        if tablelength(data) == 2 then 
-             
-                for i = 1,#lines do 
-                    local e,f = string.match(lines[i],"(.-):(.+)")
-                    if e and f then 
-                        table.insert(worldSoil,{name=e,door=f})
-                    end
+        if tablelength(data) == 2 then
+            for i = 1,#lines do 
+                local e,f = string.match(lines[i],"(.-):(.+)")
+                if e and f then 
+                    table.insert(worldSoil,{name=e,door=f})
                 end
-        end
-        table.remove(lines, 1)
-        file = io.open(fileTxt, "w") 
-        if file then 
-            for _, line in ipairs(lines) do 
-                file:write(line.. "\n")
             end
-            file:write(lines1)
-            file:close()
         end
     end
-    end
+end
 
 function warp(world,door) 
     local stuck = 0 
