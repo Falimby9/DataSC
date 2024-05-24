@@ -1,10 +1,6 @@
 
 --====== DARI SIKO COK ======--
-if not licence then 
 udahBayar = false
-elseif licence == "Premium" then 
-udahBayar = true
-end
 
 username = getUsername()
 client = HttpClient.new()
@@ -18,7 +14,7 @@ if response:find("404") not licence then
     messageBox.description = "USERNAME Tidak Terdaftar"
     messageBox:send()
     getBots():stopScript()
-elseif not response:find("404") then
+else
     udahBayar = true
 end
 
