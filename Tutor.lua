@@ -18,7 +18,7 @@ if response:find("404") not licence then
     messageBox.description = "USERNAME Tidak Terdaftar"
     messageBox:send()
     getBots():stopScript()
-else 
+elseif response:find("404") then
     udahBayar = true
 end
 
