@@ -1,14 +1,17 @@
 
 --====== DARI SIKO COK ======--
-
+if licence == "Premium" then 
+udahBayar = true
+else
 udahBayar = false
+end
 
 username = getUsername()
 client = HttpClient.new()
 client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LicenceTutor/"..username
 local response = client:request().body
 
-if response:find("404") then
+if response:find("404") and licence ~= "Premium" then
     print("Anda Belum Bayar, Kalau Sudah Chat Admin")
     messageBox = MessageBox.new()
     messageBox.title = "WanxSyn STORE "
