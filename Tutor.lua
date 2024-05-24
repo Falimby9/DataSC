@@ -11,15 +11,13 @@ client = HttpClient.new()
 client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LicenceTutor/"..username
 local response = client:request().body
 
-if response:find("404") and not licence then
+if response:find("404") not udahBayar then
     print("Anda Belum Bayar, Kalau Sudah Chat Admin")
     messageBox = MessageBox.new()
     messageBox.title = "WanxSyn STORE "
     messageBox.description = "USERNAME Tidak Terdaftar"
     messageBox:send()
-    getBot():stopScript()
-elseif response:find("404") then
-    udahBayar = false 
+    getBots():stopScript()
 else 
     udahBayar = true
 end
