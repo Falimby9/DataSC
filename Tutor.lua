@@ -21,7 +21,7 @@ if response:find("404") and not licence then
 elseif response:find("404") then
     udahBayar = false 
 else 
-    udahBayar = false
+    udahBayar = true
 end
 
 
