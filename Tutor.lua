@@ -7,7 +7,7 @@ client = HttpClient.new()
 client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LicenceTutor/"..username
 local response = client:request().body
 
-if response:find("404") not licence then
+if response:find("404") then
     print("Anda Belum Bayar, Kalau Sudah Chat Admin")
     messageBox = MessageBox.new()
     messageBox.title = "WanxSyn STORE "
