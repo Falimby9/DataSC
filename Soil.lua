@@ -59,6 +59,11 @@ if a and b then
   storageSoil = a 
   doorSoil = b
 end
+local c,d = string.match(worldWater,"(.-):(.+)")
+if c and d then 
+  worldWater = c
+  doorWater = d
+end
 
 function split(inputstr, sep)
     if sep == nil then
