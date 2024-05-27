@@ -1,4 +1,3 @@
-
 function hwid()
     local cmd = io.popen("wmic csproduct get UUID /format:list")
     if cmd then
@@ -569,8 +568,6 @@ while true do
         table.insert(worldList,world.name)
         totalWSoil = totalWSoil + 1
         if not nuked then
-            putWater(world.name,world.door)
-            sleep(100)
             sleep(100)
             buildSoil(worldSoils,doorSoils)
             sleep(100)
