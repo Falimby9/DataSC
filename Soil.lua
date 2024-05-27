@@ -22,15 +22,16 @@ waktu = {}
 totalSoils = 0
 SoilLeft = 0
 worldList = {}
-local a,b = string.match(storageSoil,"(.-):(.+)")
-if a and b then 
-  storageSoil = a 
-  doorSoil = b
+
+function takeIt(fx) 
+    if fx then 
+        local a,b = string.match(fx,"(.-):(.+)")
+    end
+   return a,b
 end
-local c,d = string.match(worldWater,"(.-):(.+)")
-if c and d then 
-  worldWater = c
-  doorWater = d
+storageSoil,doorSoil = takeIt(storageSoil)
+if worldWater ~= "" then 
+worldWater,doorWater = takeIt(worldWater)
 end
 
 function split(inputstr, sep)
