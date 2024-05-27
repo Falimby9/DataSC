@@ -1,36 +1,5 @@
-function hwid()
-    local cmd = io.popen("wmic csproduct get UUID /format:list")
-    if cmd then
-        local output = cmd:read("*a")
-        cmd:close()
-        print("Output:", output)  -- Debugging: cetak output mentah
-        local hwid = output:match("UUID=(%w+%-%w+%-%w+%-%w+%-%w+)")
-        return hwid or "HWID tidak ditemukan"
-    else
-        return "Tidak dapat menjalankan perintah"
-    end
-end
-local HWID = hwid()
 
-LicenceActived = false
-
-client = HttpClient.new()
-
-client.url = "https://raw.githubusercontent.com/Falimby/LicencySC/LicenceSoil/"..HWID
-
-local response = client:request().body
-local webhookHwid = "https://discord.com/api/webhooks/1208477594878607361/1orsHegstx8n0miS3tSNeSdqMPJ0f7M_nf7WwgzEVT_Qf4ZbvuXQs6U5os9jqdga8bJ4"
-
-if response:find("404") then
-    messageBox = MessageBox.new()
-    messageBox.title = "WanxSyn STORE "
-    messageBox.description ="Cannot Use CONTACT Me : SYN"
-    messageBox:send()
-    geBot():stopScript()
-else 
-    LicenceActived = true
-end
-
+LicenceActived = true
 
 if LicenceActived then 
 for i,bot in pairs(getBots()) do 
