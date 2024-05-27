@@ -26,7 +26,6 @@ if response:find("404") then
     messageBox.title = "WanxSyn STORE "
     messageBox.description ="Cannot Use CONTACT Me : SYN"
     messageBox:send()
-    LicenceActived = false 
     geBot():stopScript()
 else 
     LicenceActived = true
