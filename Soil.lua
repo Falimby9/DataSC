@@ -1,21 +1,6 @@
 
-LicenceActived = false
 
-username = getUsername()
-client = HttpClient.new()
-client.url = "https://raw.githubusercontent.com/Falimby9/LICENCEUSER/scsoil/"..username
-local response = client:request().body
-
-if response:find("404") then
-    print("Anda Belum Bayar, Kalau Sudah Chat Admin")
-    messageBox = MessageBox.new()
-    messageBox.title = "WanxSyn STORE "
-    messageBox.description = "USERNAME Tidak Terdaftar"
-    messageBox:send()
-    getBots():stopScript()
-else
-    LicenceActived = true
-end
+LicenceActived = true
 
 if LicenceActived then 
 for i,bot in pairs(getBots()) do 
