@@ -24,15 +24,6 @@ totalSoils = 0
 SoilLeft = 0
 worldList = {}
 
-function takeIt(fx)
-        local a,b = string.match(fx,"(.-):(.+)")
-   return a,b
-end
-storageSoil,doorSoil = takeIt(storageSoil)
-if worldWater ~= "" then 
-worldWater,doorWater = takeIt(worldWater)
-end
-
 function split(inputstr, sep)
     if sep == nil then
         sep = "%s"
