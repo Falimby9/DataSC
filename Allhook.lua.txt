@@ -1,11 +1,3 @@
-allhook = "https://discord.com/api/webhooks/1244496197146775593/cqZBDhQwlJsiZQbshucNjJb_Ff3VXNUnMJRiCTndujxmoSpwQJOW-vLCN3g88LNjIVOQ"
-
-msgId = {
-    "1244496336322039929", "1244496339534872596"
-}
-cecoredNameBot = true
-hideWorld = true
-delaySend = 5
 
 -- Fungsi untuk mendapatkan status bot
 function getStatus(inibot)
